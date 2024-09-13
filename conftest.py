@@ -18,12 +18,12 @@ def create_new_user_and_delete(): #Фикстура создает пользо�
     requests.delete(Data.USER_DELETE, headers={'Authorization': access_token})
 
 @pytest.fixture
-def create_user_and_order_and_delete(create_new_user_and_delete): #Фикстура создает пользователя и заказ для его аккаунта
+def create_order_for_user(create_new_user_and_delete): #Фикстура создает заказ
     access_token = create_new_user_and_delete[1]['accessToken']
     headers = {'Authorization': access_token}
     payload = {'ingredients': [IngredientData.BURGER_INGREDIENT_2]}
-    response_body = requests.post(Data.ORDER_CREATE, data=payload, headers=headers)
+    response = requests.post(Data.ORDER_CREATE,  json=payload, headers=headers)
 
-    yield access_token, response_body
+    yield access_token
 
-    requests.delete(Data.USER_DELETE, headers={'Authorization': access_token})
+

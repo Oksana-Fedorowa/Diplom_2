@@ -4,8 +4,8 @@ import allure
 
 class TestGetOrders:
     @allure.title('Проверка успешного получения списка заказов авторизованного пользователя')
-    def test_receive_orders_authorized_user(self, create_user_and_order_and_delete):
-        headers = {'Authorization': create_user_and_order_and_delete[0]}
+    def test_receive_orders_authorized_user(self, create_order_for_user):
+        headers = {'Authorization': create_order_for_user}
         response = requests.get(Data.GET_USER_ORDERS, headers=headers)
         response_body = response.json()
         assert (response.status_code == 200 and RespTextsData.TEXT_200_SUCCESS in response.text and 'orders' in
